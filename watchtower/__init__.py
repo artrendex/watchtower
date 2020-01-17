@@ -19,7 +19,7 @@ def _idempotent_create(_callable, *args, **kwargs):
     try:
         _callable(*args, **kwargs)
     except ClientError as e:
-        if e.response.get("Error", {}).get("Code") != "ResourceAlreadyExistsException":
+        if e.response.get("Error", {}).get("Code") not in ("ResourceAlreadyExistsException", "ThrottlingException"):
             raise
 
 
